@@ -108,7 +108,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 for (int i = 0; i < molecules.length; i++) {
 	for (int j = 0; j < molecules[i].length; j++) {
 		livingNeighbors[i][j] = getLivingNeighbors(cellsPerRow, cellsPerRow);
-		
+		getLivingNeighbors(i, j);
 	}
 }
 		// 8. check if each cell should live or die
@@ -131,7 +131,23 @@ for (int i = 0; i < molecules.length; i++) {
 	// living neighbors there are of the
 	// cell identified by x and y
 	public int getLivingNeighbors(int x, int y) {
-		return 0;
+		int count = 0;
+		for (int i = x-1; i <= x+1; i++) {
+			for (int j = y-1; j <= y+1; j++) {
+				if (i<0||j<0||i>molecules.length||j>molecules.length) {
+					
+				}
+					if (molecules[i][j]==molecules[x][y]) {
+						
+					}else if (molecules[i][j].isAlive) {
+					count +=1;
+				}
+				
+				
+			}
+		}
+		
+		return count;
 	}
 
 	@Override
@@ -156,7 +172,13 @@ for (int i = 0; i < molecules.length; i++) {
 		// 10. Use e.getX() and e.getY() to determine
 		// which cell is clicked. Then toggle
 		// the isAlive variable for that cell.
-
+		int indexX = e.getX()/cellSize;
+		int indexY = e.getY()/cellSize;
+		if (molecules[indexX][indexY].isAlive) {
+			System.out.println("This cell is alive");
+		}else {
+			System.out.println("This cell is dead");
+		}
 		repaint();
 	}
 
