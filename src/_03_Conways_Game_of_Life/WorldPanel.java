@@ -31,7 +31,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		// 2. Calculate the cell size.
 		System.out.println(cpr / h);
 		System.out.println(cpr / w);
-		cellSize = cpr / h;
+		cellSize = h / cpr;
 		// 3. Initialize the cell array to the appropriate size.
 		molecules = new Cell[cpr][cpr];
 		// 3. Iterate through the array and initialize each cell.
@@ -105,22 +105,19 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		// 7. iterate through cells and fill in the livingNeighbors array
 		// . using the getLivingNeighbors method.
 		int[][] livingNeighbors = new int[cellsPerRow][cellsPerRow];
-for (int i = 0; i < molecules.length; i++) {
-	for (int j = 0; j < molecules[i].length; j++) {
-		livingNeighbors[i][j] = getLivingNeighbors(cellsPerRow, cellsPerRow);
-		getLivingNeighbors(i, j);
-	}
-}
-		// 8. check if each cell should live or die
-	for (int i = 0; i < molecules.length; i++) {
-		for (int j = 0; j < molecules[i].length; j++) {
-			
-			if (livingNeighbors[i][j]==3) {
-				
-				
+		for (int i = 0; i < molecules.length; i++) {
+			for (int j = 0; j < molecules[i].length; j++) {
+				livingNeighbors[i][j] = getLivingNeighbors(cellsPerRow - 1, cellsPerRow - 1);
+				getLivingNeighbors(i, j);
 			}
 		}
-	}
+		// 8. check if each cell should live or die
+		for (int i = 0; i < molecules.length; i++) {
+			for (int j = 0; j < molecules[i].length; j++) {
+				molecules[i][j].liveOrDie(livingNeighbors[i][j]);
+
+				}
+			}
 		
 
 		repaint();
@@ -132,21 +129,21 @@ for (int i = 0; i < molecules.length; i++) {
 	// cell identified by x and y
 	public int getLivingNeighbors(int x, int y) {
 		int count = 0;
-		for (int i = x-1; i <= x+1; i++) {
-			for (int j = y-1; j <= y+1; j++) {
-				if (i<0||j<0||i>molecules.length||j>molecules.length) {
-					
+		for (int i = x - 1; i <= x + 1; i++) {
+			for (int j = y - 1; j <= y + 1; j++) {
+				if (i < 0 || j < 0 || i >= molecules.length || j >= molecules.length) {
+
+				} else {
+					if (molecules[i][j] == molecules[x][y]) {
+
+					} else if (molecules[i][j].isAlive) {
+						count += 1;
+					}
+
 				}
-					if (molecules[i][j]==molecules[x][y]) {
-						
-					}else if (molecules[i][j].isAlive) {
-					count +=1;
-				}
-				
-				
 			}
 		}
-		
+
 		return count;
 	}
 
@@ -172,11 +169,11 @@ for (int i = 0; i < molecules.length; i++) {
 		// 10. Use e.getX() and e.getY() to determine
 		// which cell is clicked. Then toggle
 		// the isAlive variable for that cell.
-		int indexX = e.getX()/cellSize;
-		int indexY = e.getY()/cellSize;
+		int indexX = e.getX() / cellSize;
+		int indexY = e.getY() / cellSize;
 		if (molecules[indexX][indexY].isAlive) {
 			System.out.println("This cell is alive");
-		}else {
+		} else {
 			System.out.println("This cell is dead");
 		}
 		repaint();
