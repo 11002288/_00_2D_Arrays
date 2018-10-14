@@ -39,7 +39,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		// passing in the location.
 		for (int i = 0; i < molecules.length; i++) {
 			for (int j = 0; j < molecules.length; j++) {
-				molecules[i][j] = new Cell(i * w, j * h, cellSize);
+				molecules[i][j] = new Cell(i * cellSize, j * cellSize, cellSize);
 			}
 		}
 	}
@@ -92,9 +92,9 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		for (int i = 0; i < molecules.length; i++) {
 			for (int j = 0; j < molecules[i].length; j++) {
 				molecules[i][j].draw(g);
-
-			}
-		}
+			}}
+			
+		
 		// draws grid
 		g.setColor(Color.BLACK);
 		g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
@@ -107,7 +107,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		int[][] livingNeighbors = new int[cellsPerRow][cellsPerRow];
 		for (int i = 0; i < molecules.length; i++) {
 			for (int j = 0; j < molecules[i].length; j++) {
-				livingNeighbors[i][j] = getLivingNeighbors(cellsPerRow - 1, cellsPerRow - 1);
+				livingNeighbors[i][j] = getLivingNeighbors(i, j);
 				getLivingNeighbors(i, j);
 			}
 		}

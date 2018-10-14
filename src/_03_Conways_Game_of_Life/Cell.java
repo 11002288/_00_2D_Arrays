@@ -15,6 +15,7 @@ public class Cell implements Drawable {
 		this.x = x;
 		this.y = y;
 		this.cellSize = size;
+		
 	}
 
 	// 11. Complete tue liveOrDie method
@@ -31,9 +32,7 @@ public class Cell implements Drawable {
 	public void liveOrDie(int numNeighbors) {
 		if (isAlive && numNeighbors < 2 || isAlive && numNeighbors > 3) {
 			isAlive = false;
-		} else if (isAlive && numNeighbors == 3 || isAlive && numNeighbors == 2) {
-
-		} else if (isAlive = false && numNeighbors == 3) {
+		} else if (isAlive == false && numNeighbors == 3) {
 			isAlive = true;
 		}
 	}
@@ -53,14 +52,15 @@ public class Cell implements Drawable {
 	public void draw(Graphics g) {
 
 		if (isAlive) {
-			System.out.println("test");
+			
 			g.setColor(Color.ORANGE);
 			g.fillRect(x, y, cellSize, cellSize);
+			System.out.println("test");
 		} else if (isAlive == false) {
 			System.out.println("test2");
 			g.setColor(Color.WHITE);
 			g.fillRect(x, y, cellSize, cellSize);
 		}
 	}
-
+	
 }
